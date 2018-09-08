@@ -10,7 +10,7 @@ namespace EmployesService
         public static void Register(HttpConfiguration config)
         {
             // Configuración y servicios de API web
-
+            
             // Rutas de API web
             config.MapHttpAttributeRoutes();
 
@@ -19,12 +19,13 @@ namespace EmployesService
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            
-            
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
 
-            //config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+                       //            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+
+
         }
     }
 }

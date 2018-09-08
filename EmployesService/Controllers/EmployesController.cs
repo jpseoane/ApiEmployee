@@ -7,15 +7,30 @@ using System.Web.Http;
 using EmployeeDataAccess;
 
 
+
 namespace EmployesService.Controllers
 {
     public class EmployesController : ApiController
     {
-        public IEnumerable<Employees> Get()
+        [HttpGet]
+        public HttpResponseMessage Get(string gender = "t")
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
-                return entities.Employees.ToList();
+                switch (gender.ToLower())
+                {
+                    case "t":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+
+                    case "m":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
+
+                    case "f":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == gender.ToString()).ToList());
+                    default:
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "El valor del genero debe ser femenino(f), masculino(m) o Todos(t). Este " + gender.ToString() + " es invalido");
+
+                }
             }
         }
 
@@ -24,7 +39,7 @@ namespace EmployesService.Controllers
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
 
-               var entity= entities.Employees.FirstOrDefault(e => e.ID == id);
+                var entity = entities.Employees.FirstOrDefault(e => e.ID == id);
 
                 if (entity != null)
                 {
@@ -32,7 +47,7 @@ namespace EmployesService.Controllers
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,"La entidad numero " + entity.ID + " no se encontro");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "La entidad numero " + entity.ID + " no se encontro");
                 }
 
             }
@@ -55,9 +70,10 @@ namespace EmployesService.Controllers
 
                 }
             }
-            catch (Exception ex) {
-              return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-              
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+
             }
         }
 
@@ -85,7 +101,7 @@ namespace EmployesService.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
-            
+
         }
 
         public HttpResponseMessage Put(int id, [FromBody] Employees employees)
@@ -120,5 +136,5 @@ namespace EmployesService.Controllers
 
 
     }
-   
+
 }
