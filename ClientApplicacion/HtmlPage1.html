@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Listado de Empleados</title>
-    <script  src="Scripts/jquery-3.3.1.js"></script>
+    <script src="Scripts/jquery-3.3.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             var ulEmpleados = $('#ulEmpleados');
@@ -15,7 +15,7 @@
                     success: function (data) {
                         ulEmpleados.empty();
                         $.each(data, function (index, val){
-                            var nombreCompleto = val.FirstName + ' ' + val.FullName;                            
+                            var nombreCompleto = val.FirstName + ' ' + val.FullName;
                             ulEmpleados.append('<li>' + nombreCompleto + '</li>')
                         });
                     }
