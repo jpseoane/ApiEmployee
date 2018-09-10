@@ -11,32 +11,58 @@ namespace EmployesService.Controllers
 {
     public class EmployesController : ApiController
     {
-        public IEnumerable<Employees> Get()
+
+
+        //[HttpGet]
+        //public IEnumerable<Employees> Get()
+        //{
+        //    using (EmployeeDBEntities entities = new EmployeeDBEntities())
+        //    {
+        //        return entities.Employees.ToList();
+        //    }
+        //}
+
+        public HttpResponseMessage Get(string gender = "All")
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
-                return entities.Employees.ToList();
+                switch (gender.ToLower())
+                {
+                    case "all":
+                        return Request.CreateResponse(HttpStatusCode.OK,
+                            entities.Employees.ToList());
+                    case "male":
+                        return Request.CreateResponse(HttpStatusCode.OK,
+                            entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
+                    case "female":
+                        return Request.CreateResponse(HttpStatusCode.OK,
+                            entities.Employees.Where(e => e.Gender.ToLower() == "female").ToList());
+                    default:
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Value for gender must be Male, Female or All. " + gender + " is invalid.");
+                }
             }
         }
 
-        public HttpResponseMessage Get(int id)
-        {
-            using (EmployeeDBEntities entities = new EmployeeDBEntities())
-            {
 
-               var entity= entities.Employees.FirstOrDefault(e => e.ID == id);
+        //public HttpResponseMessage Get(int id)
+        //{
+        //    using (EmployeeDBEntities entities = new EmployeeDBEntities())
+        //    {
 
-                if (entity != null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                }
-                else
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,"La entidad numero " + entity.ID + " no se encontro");
-                }
+        //       var entity= entities.Employees.FirstOrDefault(e => e.ID == id);
 
-            }
-        }
+        //        if (entity != null)
+        //        {
+        //            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        //        }
+        //        else
+        //        {
+        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound,"La entidad numero " + entity.ID + " no se encontro");
+        //        }
+
+        //    }
+        //}
 
 
         public HttpResponseMessage Post([FromBody] Employees employees)

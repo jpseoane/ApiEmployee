@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Listado de Empleados</title>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ulEmpleados = $('#ulEmpleados');
+            $('#btn').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: 'api/Employes',
+                    dataType: 'json',
+                    success: function (data) {
+                        ulEmpleados.emty();
+
+                    }
+
+                });
+
+                
+
+
+            });
+
+
+            $('#btnLimpiar').click(function () {
+                $('#ulEmpleados').clear();
+
+        });
+
+
+    </script>
+    
+</head>
+<body>
+    <input id="btn" type="button" value="Listar los empleados" />
+    <input id="btnLimpiar" type="button" value="Limpiar" />
+    <ul id="ulEmpleados"></ul>
+
+</body>
+</html>
