@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -20,7 +21,7 @@ namespace EmployeeService
 
                 UriBuilder uriBuilder = new UriBuilder(actionContext.Request.RequestUri);
                 uriBuilder.Scheme = Uri.UriSchemeHttps;
-                uriBuilder.Port = 44319;
+                uriBuilder.Port = 44302;
 
                 actionContext.Response.Headers.Location = uriBuilder.Uri;
             }
