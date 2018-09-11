@@ -9,9 +9,9 @@
             var ulEmpleados = $('#ulEmpleados');
             $('#btn').click(function () {
                 $.ajax({
-                    type: 'GET',
-                    url: 'http://localhost:15284/api/Employes',
-                    dataType: 'json',
+                    type: 'GET',                    
+                    url: 'api/Employes',
+                    dataType: 'jsonp',
                     success: function (data) {
                         ulEmpleados.empty();
                         $.each(data, function (index, val){

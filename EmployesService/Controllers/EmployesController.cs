@@ -4,28 +4,30 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using EmployeeDataAccess;
 
 
 
 namespace EmployesService.Controllers
 {
+    [EnableCorsAttribute("*", "*", "*")]
     public class EmployesController : ApiController
     {
         [HttpGet]
-        public HttpResponseMessage Get(string gender = "t")
+        public HttpResponseMessage Get(string gender = "all")
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
                 switch (gender.ToLower())
                 {
-                    case "t":
+                    case "all":
                         return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
 
-                    case "m":
+                    case "male":
                         return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
 
-                    case "f":
+                    case "female":
                         return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == gender.ToString()).ToList());
                     default:
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "El valor del genero debe ser femenino(f), masculino(m) o Todos(t). Este " + gender.ToString() + " es invalido");
@@ -33,6 +35,28 @@ namespace EmployesService.Controllers
                 }
             }
         }
+
+        
+        //public HttpResponseMessage Get(string gender = "all")
+        //{
+        //    using (EmployeeDBEntities entities = new EmployeeDBEntities())
+        //    {
+        //        switch (gender.ToLower())
+        //        {
+        //            case "all":
+        //                return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+
+        //            case "male":
+        //                return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
+
+        //            case "female":
+        //                return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == gender.ToString()).ToList());
+        //            default:
+        //                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "El valor del genero debe ser femenino(f), masculino(m) o Todos(t). Este " + gender.ToString() + " es invalido");
+
+        //        }
+        //    }
+        //}
 
         public HttpResponseMessage Get(int id)
         {
