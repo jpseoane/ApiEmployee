@@ -8,16 +8,28 @@
         $(document).ready(function () {
             var ulEmpleados = $('#ulEmpleados');
             $('#btn').click(function () {
+                var username = $('#txtUsername').val();
+                var password = $('#txtPassword').val();
+
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:15284/api/Employes',
                     dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic' + btoa(username + ':' + password)
+                    },
                     success: function (data) {
                         ulEmpleados.empty();
                         $.each(data, function (index, val){
                             var nombreCompleto = val.FirstName + ' ' + val.FullName;                            
-                            ulEmpleados.append('<li>' + nombreCompleto + '</li>')
+                            ulEmpleados.append('<li>' + nombreCompleto + ' (' + val.Gender + ')</li>')
                         });
+                    },
+                    complete: function (jqXHR) {
+                        if (jqXHR.status == '401') {
+                            ulEmpleados.empty();
+                            ulEmpleados.append('<li style="color:Red;" >' + jqXHR.status + ' : ' + jqXHR.statusText + '</li>');
+                        }
                     }
                 });
             });
@@ -28,9 +40,13 @@
     </script>
 </head>
 <body>
-    <input id="btn" type="button" value="Listar los empleados" />
-    <input id="btnLimpiar" type="button" value="Limpiar" />
-    <ul id="ulEmpleados"></ul>
-
+    <div>
+        UserName:<input type="text" id="txtUsername" />
+        Password:<input type="password" id="txtPassword" />
+        <br /><br />
+        <input id="btn" type="button" value="Autenticar y cargar empleados" />
+        <input id="btnLimpiar" type="button" value="Limpiar" />
+        <ul id="ulEmpleados"></ul>
+    </div>
 </body>
 </html>

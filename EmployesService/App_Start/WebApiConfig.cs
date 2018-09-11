@@ -33,9 +33,9 @@ namespace EmployesService
             //config.Formatters.Insert(0, jsonpFormatter);
 
             EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(cors);
+            config.EnableCors();
 
-            config.Filters.Add(new EmployeeService.RequireHttpsAttribute());
+            //config.Filters.Add(new EmployeeService.RequireHttpsAttribute());
 
         }
     }
