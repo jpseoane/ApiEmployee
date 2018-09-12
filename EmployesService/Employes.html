@@ -16,7 +16,7 @@
                     url: 'http://localhost:15284/api/Employes',
                     dataType: 'json',
                     headers: {
-                        'Authorization': 'Basic' + btoa(username + ':' + password)
+                        'Authorization': 'Basic' + ' ' + btoa(username + ':' + password)
                     },
                     success: function (data) {
                         ulEmpleados.empty();
