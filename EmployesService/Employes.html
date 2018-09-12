@@ -25,6 +25,7 @@
                             ulEmpleados.append('<li>' + nombreCompleto + ' (' + val.Gender + ')</li>')
                         });
                     },
+
                     complete: function (jqXHR) {
                         if (jqXHR.status == '401') {
                             ulEmpleados.empty();
@@ -38,6 +39,7 @@
             });
          });
     </script>
+    <!-- jqXHR Se refiere a una variable que devuelve del tipo jquery XML HTTP Response -->
 </head>
 <body>
     <div>
