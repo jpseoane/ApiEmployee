@@ -59,11 +59,11 @@ namespace EmployesServiceLoginAsp
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "35118423194-7evin6sl8tevgh749i2gd0rh7h2mc8r1.apps.googleusercontent.com",
+                ClientSecret = "EwjCGlPzPvuPdX02WtbHxfNs"
+            });
         }
     }
 }

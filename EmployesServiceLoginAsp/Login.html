@@ -8,7 +8,6 @@
 <body style="padding-top:20px">
     <div class="col-md-10 col-md-offset-1">
         <div class="well">
-            <!--This table contains the fields that we want to capture to register a new user-->
             <table class="table table-bordered">
                 <thead>
                     <tr class="success">
@@ -38,6 +37,23 @@
                     </tr>
                 </tbody>
             </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="success">
+                        <th colspan="2">
+                            Social Logins User Login
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="button" id="btnGoogleLogin"
+                                   class="btn btn-success" value="Login with Google" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div id="divError" class="alert alert-danger collapse">
                 <a id="linkClose" href="#" class="close">&times;</a>
                 <div id="divErrorText"></div>
@@ -45,10 +61,18 @@
         </div>
     </div>
 
+    
+
     <script src="Scripts/jquery-3.3.1.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#btnGoogleLogin').click(function () {
+                window.location.href = "/api/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A6003%2FLogin.html&state=7M6ukv7RFa7Ayih50OZIqHDvryGK2ab8NPkH2s9MCc01";
+
+            });
+
 
             //Close the bootstrap alert
             $('#linkClose').click(function () {
@@ -64,7 +88,7 @@
                     data: {
                         email: $('#txtUsername').val(),
                         password: $('#txtPassword').val(),
-                        grant_type:'password'
+                        grant_type: 'password'
                     },
                     success: function (response) {
                         $('#divErrorText').text(JSON.stringify(response));
